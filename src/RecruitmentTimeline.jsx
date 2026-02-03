@@ -552,9 +552,9 @@ const RecruitmentTimeline = () => {
                 <p className="text-blue-100 text-xs sm:text-sm">nambin96@naver.com</p>
               </div>
             </div>
-            <div className="text-right hidden sm:block">
-              <div className="text-lg font-bold">AI 기반 채용 관리 시스템</div>
-              <div className="text-blue-100 text-sm">포트폴리오 프로젝트</div>
+            <div className="text-right">
+              <div className="text-sm sm:text-lg font-bold">AI 기반 채용 관리 시스템</div>
+              <div className="text-blue-100 text-xs sm:text-sm">포트폴리오 프로젝트</div>
             </div>
           </div>
         </div>
@@ -577,21 +577,21 @@ const RecruitmentTimeline = () => {
               />
               <span>🤖 AI 추천 표시</span>
             </label>
-            <div className="hidden sm:flex gap-2 text-sm">
+            <div className="flex flex-wrap gap-2 text-xs sm:text-sm">
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-emerald-500"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded bg-emerald-500"></div>
                 <span>완료</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-blue-500"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded bg-blue-500"></div>
                 <span>진행중</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-red-500"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded bg-red-500"></div>
                 <span>기한초과</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded-full bg-purple-400 animate-pulse"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-purple-400 animate-pulse"></div>
                 <span>AI추천</span>
               </div>
             </div>
@@ -637,9 +637,15 @@ const RecruitmentTimeline = () => {
           </div>
           
           {isLoadingTasks ? (
-            <div className="text-center py-6">
-              <div className="inline-block w-8 h-8 border-3 border-gray-200 border-t-violet-600 rounded-full animate-spin"></div>
-              <p className="text-sm text-gray-500 mt-3">AI가 분석 중입니다...</p>
+            <div className="text-center py-8 relative overflow-hidden">
+              <div className="relative inline-block">
+                <div className="w-12 h-12 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin"></div>
+                <span className="absolute -top-2 -left-2 text-xl animate-bounce" style={{animationDelay: '0ms'}}>✨</span>
+                <span className="absolute -top-1 -right-3 text-lg animate-bounce" style={{animationDelay: '150ms'}}>🪄</span>
+                <span className="absolute -bottom-2 -left-3 text-lg animate-bounce" style={{animationDelay: '300ms'}}>⭐</span>
+                <span className="absolute -bottom-1 -right-2 text-xl animate-bounce" style={{animationDelay: '450ms'}}>✨</span>
+              </div>
+              <p className="text-sm text-violet-600 mt-4 font-medium animate-pulse">AI가 마법을 부리는 중...</p>
             </div>
           ) : !showTodayTasks ? (
             <div className="text-center py-6">
@@ -649,19 +655,20 @@ const RecruitmentTimeline = () => {
                   setTimeout(() => {
                     setIsLoadingTasks(false);
                     setShowTodayTasks(true);
-                  }, 1000);
+                  }, 1500);
                 }}
-                className="group relative px-8 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-xl hover:from-violet-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl"
+                className="group relative px-8 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-xl hover:from-violet-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl hover:scale-105"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                    <span className="text-lg">✨</span>
+                    <span className="text-lg group-hover:animate-spin">✨</span>
                   </div>
                   <div className="text-left">
                     <div className="font-bold">AI로 오늘 할 일 분석</div>
                     <div className="text-xs text-white/70">우선순위를 자동으로 정리합니다</div>
                   </div>
                 </div>
+                <span className="absolute -top-1 -right-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity">🪄</span>
               </button>
             </div>
           ) : todayTasks.length === 0 ? (
