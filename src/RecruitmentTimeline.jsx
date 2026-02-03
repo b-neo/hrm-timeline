@@ -934,8 +934,8 @@ const RecruitmentTimeline = () => {
                             width: `${barWidth}px`
                           }}
                         >
-                          <div className="flex items-center justify-center h-full px-2">
-                            <span className="text-xs font-medium truncate">{stage.name}</span>
+                          <div className="flex items-center justify-center h-full px-1">
+                            <span className="text-xs font-medium truncate">(AI추천) {stage.name}</span>
                           </div>
                         </div>
                       );
