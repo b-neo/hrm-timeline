@@ -21,6 +21,7 @@ const RecruitmentTimeline = () => {
   const [showAIRecommendation, setShowAIRecommendation] = useState(true);
   const [showTodayTasks, setShowTodayTasks] = useState(false);
   const [isLoadingTasks, setIsLoadingTasks] = useState(false);
+  const [isLeftColumnCollapsed, setIsLeftColumnCollapsed] = useState(false);
 
   const todayIndex = dates.findIndex(d =>
     d.getFullYear() === today.getFullYear() &&
@@ -31,12 +32,12 @@ const RecruitmentTimeline = () => {
   useEffect(() => {
     if (scrollContainerRef.current && todayIndex >= 0) {
       const cellWidth = 28;
-      const leftColumnWidth = 208;
+      const leftColumnWidth = isLeftColumnCollapsed ? 48 : 208;
       const containerWidth = scrollContainerRef.current.clientWidth;
       const scrollPosition = (todayIndex * cellWidth) - (containerWidth / 2) + leftColumnWidth + (cellWidth / 2);
       scrollContainerRef.current.scrollLeft = Math.max(0, scrollPosition);
     }
-  }, [todayIndex]);
+  }, [todayIndex, isLeftColumnCollapsed]);
 
   const [recruitments, setRecruitments] = useState([
     {
@@ -661,7 +662,7 @@ const RecruitmentTimeline = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                    <span className="text-lg group-hover:animate-spin">✨</span>
+                    <span className="text-lg animate-spin">✨</span>
                   </div>
                   <div className="text-left">
                     <div className="font-bold">AI로 오늘 할 일 분석</div>
@@ -750,8 +751,15 @@ const RecruitmentTimeline = () => {
             <div className="min-w-max">
               {/* 날짜 헤더 */}
               <div className="flex border-b sticky top-0 z-10 bg-white">
-                <div className="w-52 flex-shrink-0 border-r p-2 font-medium text-sm bg-gray-50">
-                  전형명
+                <div className={`${isLeftColumnCollapsed ? 'w-12' : 'w-52'} flex-shrink-0 border-r p-2 font-medium text-sm bg-gray-50 sticky left-0 z-20 transition-all duration-300 flex items-center justify-between`}>
+                  {!isLeftColumnCollapsed && <span>전형명</span>}
+                  <button
+                    onClick={() => setIsLeftColumnCollapsed(!isLeftColumnCollapsed)}
+                    className="w-6 h-6 flex items-center justify-center rounded hover:bg-gray-200 transition-colors text-gray-500"
+                    title={isLeftColumnCollapsed ? '펼치기' : '접기'}
+                  >
+                    {isLeftColumnCollapsed ? '→' : '←'}
+                  </button>
                 </div>
                 <div className="flex relative">
                   {dates.map((date, idx) => (
@@ -787,18 +795,26 @@ const RecruitmentTimeline = () => {
 
               {/* 기존 전형 */}
               {recruitments.map(recruitment => (
-                <div 
+                <div
                   key={recruitment.id}
                   id={`recruitment-${recruitment.id}`}
                   className="flex border-b hover:bg-gray-50"
                 >
-                  <div className="w-52 flex-shrink-0 p-2 border-r">
-                    <div className="font-medium text-sm truncate">{recruitment.name}</div>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                      <span className="px-1.5 py-0.5 bg-gray-100 rounded">{recruitment.type}</span>
-                      <span>{recruitment.headcount}명</span>
-                      <span>· {recruitment.owner}</span>
-                    </div>
+                  <div className={`${isLeftColumnCollapsed ? 'w-12' : 'w-52'} flex-shrink-0 p-2 border-r bg-white sticky left-0 z-10 transition-all duration-300`}>
+                    {isLeftColumnCollapsed ? (
+                      <div className="font-medium text-xs text-center" title={recruitment.name}>
+                        {recruitment.name.slice(0, 2)}
+                      </div>
+                    ) : (
+                      <>
+                        <div className="font-medium text-sm truncate">{recruitment.name}</div>
+                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
+                          <span className="px-1.5 py-0.5 bg-gray-100 rounded">{recruitment.type}</span>
+                          <span>{recruitment.headcount}명</span>
+                          <span>· {recruitment.owner}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className="flex relative">
@@ -883,20 +899,28 @@ const RecruitmentTimeline = () => {
 
               {/* AI 추천 전형 */}
               {showAIRecommendation && aiRecommendations.map(rec => (
-                <div 
-                  key={rec.id} 
+                <div
+                  key={rec.id}
                   className="flex border-b bg-purple-50 hover:bg-purple-100 cursor-pointer"
                   onClick={() => setSelectedAIRec(rec)}
                 >
-                  <div className="w-52 flex-shrink-0 p-2 border-r">
-                    <div className="flex items-center gap-2">
-                      <span className="animate-pulse">🤖</span>
-                      <div className="font-medium text-sm truncate text-purple-800">(AI추천) {rec.name}</div>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-purple-600">
-                      <span className="px-1.5 py-0.5 bg-purple-200 rounded">{rec.type}</span>
-                      <span>{rec.headcount}명</span>
-                    </div>
+                  <div className={`${isLeftColumnCollapsed ? 'w-12' : 'w-52'} flex-shrink-0 p-2 border-r bg-purple-50 sticky left-0 z-10 transition-all duration-300`}>
+                    {isLeftColumnCollapsed ? (
+                      <div className="flex items-center justify-center" title={`(AI추천) ${rec.name}`}>
+                        <span className="animate-pulse text-sm">🤖</span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <span className="animate-pulse">🤖</span>
+                          <div className="font-medium text-sm truncate text-purple-800">(AI추천) {rec.name}</div>
+                        </div>
+                        <div className="flex items-center gap-2 mt-1 text-xs text-purple-600">
+                          <span className="px-1.5 py-0.5 bg-purple-200 rounded">{rec.type}</span>
+                          <span>{rec.headcount}명</span>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className="flex relative">
