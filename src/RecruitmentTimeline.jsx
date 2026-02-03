@@ -34,7 +34,9 @@ const RecruitmentTimeline = () => {
       const cellWidth = 28;
       const leftColumnWidth = isLeftColumnCollapsed ? 48 : 208;
       const containerWidth = scrollContainerRef.current.clientWidth;
-      const scrollPosition = (todayIndex * cellWidth) - (containerWidth / 2) + leftColumnWidth + (cellWidth / 2);
+      const visibleDateAreaWidth = containerWidth - leftColumnWidth;
+      const todayPosition = todayIndex * cellWidth + cellWidth / 2;
+      const scrollPosition = todayPosition - visibleDateAreaWidth / 2;
       scrollContainerRef.current.scrollLeft = Math.max(0, scrollPosition);
     }
   }, [todayIndex, isLeftColumnCollapsed]);
@@ -832,9 +834,7 @@ const RecruitmentTimeline = () => {
                       <div
                         className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-[5]"
                         style={{ left: `${todayIndex * 28 + 14}px` }}
-                      >
-                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-500 rounded-full"></div>
-                      </div>
+                      ></div>
                     )}
 
                     {recruitment.stages.map((stage, stageIdx) => {
