@@ -770,7 +770,7 @@ const RecruitmentTimeline = () => {
                       ref={idx === todayIndex ? todayRef : null}
                       className={`w-7 text-center border-l flex flex-col items-center py-1
                         ${isWeekend(date) ? 'bg-gray-100' : ''}
-                        ${idx === todayIndex ? 'bg-blue-50' : ''}
+                        ${idx === todayIndex ? 'bg-red-50' : ''}
                       `}
                     >
                       {isMonthStart(date, idx) && (
@@ -779,13 +779,13 @@ const RecruitmentTimeline = () => {
                         </span>
                       )}
                       <span className={`text-xs mt-2 ${
-                        idx === todayIndex ? 'font-bold text-blue-600' :
+                        idx === todayIndex ? 'font-bold text-red-600' :
                         isWeekend(date) ? 'text-red-400' : 'text-gray-500'
                       }`}>
                         {date.getDate()}
                       </span>
                       <span className={`text-xs ${
-                        idx === todayIndex ? 'font-bold text-blue-600' :
+                        idx === todayIndex ? 'font-bold text-red-600' :
                         isWeekend(date) ? 'text-red-400' : 'text-gray-400'
                       }`}>
                         {getDayName(date)}
@@ -825,7 +825,7 @@ const RecruitmentTimeline = () => {
                         key={idx}
                         className={`w-7 h-16 border-l
                           ${isWeekend(date) ? 'bg-gray-50' : ''}
-                          ${idx === todayIndex ? 'bg-blue-50' : ''}
+                          ${idx === todayIndex ? 'bg-red-50' : ''}
                         `}
                       ></div>
                     ))}
@@ -929,7 +929,7 @@ const RecruitmentTimeline = () => {
                         key={idx}
                         className={`w-7 h-16 border-l
                           ${isWeekend(date) ? 'bg-purple-100/50' : ''}
-                          ${idx === todayIndex ? 'bg-blue-50' : ''}
+                          ${idx === todayIndex ? 'bg-red-50' : ''}
                         `}
                       ></div>
                     ))}
