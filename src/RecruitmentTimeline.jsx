@@ -16,16 +16,27 @@ const RecruitmentTimeline = () => {
   
   const dates = generateDates();
   const todayRef = useRef(null);
+  const scrollContainerRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showAIRecommendation, setShowAIRecommendation] = useState(true);
   const [showTodayTasks, setShowTodayTasks] = useState(false);
   const [isLoadingTasks, setIsLoadingTasks] = useState(false);
-  
+
+  const todayIndex = dates.findIndex(d =>
+    d.getFullYear() === today.getFullYear() &&
+    d.getMonth() === today.getMonth() &&
+    d.getDate() === today.getDate()
+  );
+
   useEffect(() => {
-    if (todayRef.current) {
-      todayRef.current.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    if (scrollContainerRef.current && todayIndex >= 0) {
+      const cellWidth = 28;
+      const leftColumnWidth = 208;
+      const containerWidth = scrollContainerRef.current.clientWidth;
+      const scrollPosition = (todayIndex * cellWidth) - (containerWidth / 2) + leftColumnWidth + (cellWidth / 2);
+      scrollContainerRef.current.scrollLeft = Math.max(0, scrollPosition);
     }
-  }, []);
+  }, [todayIndex]);
 
   const [recruitments, setRecruitments] = useState([
     {
@@ -317,16 +328,6 @@ const RecruitmentTimeline = () => {
     );
   };
 
-  const getTodayIndex = () => {
-    return dates.findIndex(d =>
-      d.getFullYear() === today.getFullYear() &&
-      d.getMonth() === today.getMonth() &&
-      d.getDate() === today.getDate()
-    );
-  };
-
-  const todayIndex = getTodayIndex();
-
   const getDayName = (date) => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     return days[date.getDay()];
@@ -598,31 +599,33 @@ const RecruitmentTimeline = () => {
         </div>
 
         {/* 상단 통계 카드 - 컴팩트 */}
-        <div className="flex gap-2 mb-4">
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex items-center gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-4">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
             <span className="text-xs text-gray-500">7일 내 마감</span>
             <span className="text-lg font-bold text-orange-600">{upcomingDeadlines.length}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
             <span className="text-xs text-gray-500">완료</span>
             <span className="text-lg font-bold text-emerald-600">{stats.completed}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
             <span className="text-xs text-gray-500">진행중</span>
             <span className="text-lg font-bold text-blue-600">{stats.inProgress}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex items-center gap-2">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
             <span className="text-xs text-gray-500">기한초과</span>
             <span className="text-lg font-bold text-red-600">{stats.overdue}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex items-center gap-3">
-            <span className="text-xs text-gray-500">담당자</span>
-            {Object.entries(ownerLoad).map(([owner, load]) => (
-              <span key={owner} className="text-xs">
-                {owner}
-                {load.overdue > 0 && <span className="text-red-600 ml-1">⚠{load.overdue}</span>}
-              </span>
-            ))}
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col col-span-3 sm:col-span-1">
+            <span className="text-xs text-gray-500 mb-1">담당자</span>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(ownerLoad).map(([owner, load]) => (
+                <span key={owner} className="text-xs">
+                  {owner}
+                  {load.overdue > 0 && <span className="text-red-600 ml-1">⚠{load.overdue}</span>}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -736,7 +739,7 @@ const RecruitmentTimeline = () => {
 
         {/* 간트 차트 */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" ref={scrollContainerRef}>
             <div className="min-w-max">
               {/* 날짜 헤더 */}
               <div className="flex border-b sticky top-0 z-10 bg-white">
