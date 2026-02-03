@@ -830,10 +830,10 @@ const RecruitmentTimeline = () => {
 
                     {todayIndex >= 0 && (
                       <div
-                        className="absolute top-0 bottom-0 w-0.5 bg-blue-500 z-[5]"
+                        className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-[5]"
                         style={{ left: `${todayIndex * 28 + 14}px` }}
                       >
-                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-500 rounded-full"></div>
                       </div>
                     )}
 
@@ -936,7 +936,7 @@ const RecruitmentTimeline = () => {
 
                     {todayIndex >= 0 && (
                       <div
-                        className="absolute top-0 bottom-0 w-0.5 bg-blue-500 z-[5]"
+                        className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-[5]"
                         style={{ left: `${todayIndex * 28 + 14}px` }}
                       ></div>
                     )}
