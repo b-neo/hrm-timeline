@@ -768,7 +768,7 @@ const RecruitmentTimeline = () => {
                       ref={idx === todayIndex ? todayRef : null}
                       className={`w-7 text-center border-l flex flex-col items-center py-1
                         ${isWeekend(date) ? 'bg-gray-100' : ''}
-                        ${idx === todayIndex ? 'bg-red-50' : ''}
+                        ${idx === todayIndex ? 'bg-blue-50' : ''}
                       `}
                     >
                       {isMonthStart(date, idx) && (
@@ -777,13 +777,13 @@ const RecruitmentTimeline = () => {
                         </span>
                       )}
                       <span className={`text-xs mt-2 ${
-                        idx === todayIndex ? 'font-bold text-red-600' : 
+                        idx === todayIndex ? 'font-bold text-blue-600' :
                         isWeekend(date) ? 'text-red-400' : 'text-gray-500'
                       }`}>
                         {date.getDate()}
                       </span>
                       <span className={`text-xs ${
-                        idx === todayIndex ? 'font-bold text-red-600' :
+                        idx === todayIndex ? 'font-bold text-blue-600' :
                         isWeekend(date) ? 'text-red-400' : 'text-gray-400'
                       }`}>
                         {getDayName(date)}
@@ -823,17 +823,17 @@ const RecruitmentTimeline = () => {
                         key={idx}
                         className={`w-7 h-16 border-l
                           ${isWeekend(date) ? 'bg-gray-50' : ''}
-                          ${idx === todayIndex ? 'bg-red-50' : ''}
+                          ${idx === todayIndex ? 'bg-blue-50' : ''}
                         `}
                       ></div>
                     ))}
 
                     {todayIndex >= 0 && (
-                      <div 
-                        className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-20"
+                      <div
+                        className="absolute top-0 bottom-0 w-0.5 bg-blue-500 z-[5]"
                         style={{ left: `${todayIndex * 28 + 14}px` }}
                       >
-                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-500 rounded-full"></div>
+                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full"></div>
                       </div>
                     )}
 
@@ -929,14 +929,14 @@ const RecruitmentTimeline = () => {
                         key={idx}
                         className={`w-7 h-16 border-l
                           ${isWeekend(date) ? 'bg-purple-100/50' : ''}
-                          ${idx === todayIndex ? 'bg-red-50' : ''}
+                          ${idx === todayIndex ? 'bg-blue-50' : ''}
                         `}
                       ></div>
                     ))}
 
                     {todayIndex >= 0 && (
-                      <div 
-                        className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-20"
+                      <div
+                        className="absolute top-0 bottom-0 w-0.5 bg-blue-500 z-[5]"
                         style={{ left: `${todayIndex * 28 + 14}px` }}
                       ></div>
                     )}
