@@ -541,18 +541,18 @@ const RecruitmentTimeline = () => {
       <div className="max-w-full mx-auto">
         
         {/* 프로필 섹션 */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg p-4 mb-4 text-white">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl shadow-lg p-3 sm:p-4 mb-4 text-white">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-md">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-md">
                 👨‍💼
               </div>
               <div>
-                <h1 className="text-xl font-bold">김남빈</h1>
-                <p className="text-blue-100 text-sm">nambin96@naver.com</p>
+                <h1 className="text-lg sm:text-xl font-bold">김남빈</h1>
+                <p className="text-blue-100 text-xs sm:text-sm">nambin96@naver.com</p>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-right hidden sm:block">
               <div className="text-lg font-bold">AI 기반 채용 관리 시스템</div>
               <div className="text-blue-100 text-sm">포트폴리오 프로젝트</div>
             </div>
@@ -560,14 +560,14 @@ const RecruitmentTimeline = () => {
         </div>
 
         {/* 헤더 */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-800">채용 전형 타임라인</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-lg sm:text-xl font-bold text-gray-800">채용 전형 타임라인</h1>
+            <p className="text-xs sm:text-sm text-gray-500">
               {today.getFullYear()}년 {today.getMonth() + 1}월 {today.getDate()}일 ({getDayName(today)}) 기준
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input
                 type="checkbox"
@@ -577,7 +577,7 @@ const RecruitmentTimeline = () => {
               />
               <span>🤖 AI 추천 표시</span>
             </label>
-            <div className="flex gap-2 text-sm">
+            <div className="hidden sm:flex gap-2 text-sm">
               <div className="flex items-center gap-1">
                 <div className="w-3 h-3 rounded bg-emerald-500"></div>
                 <span>완료</span>
@@ -599,26 +599,26 @@ const RecruitmentTimeline = () => {
         </div>
 
         {/* 상단 통계 카드 - 컴팩트 */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-4">
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
+        <div className="grid grid-cols-2 gap-2 mb-4 sm:flex sm:gap-2">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col sm:flex-row sm:items-center sm:gap-2">
             <span className="text-xs text-gray-500">7일 내 마감</span>
             <span className="text-lg font-bold text-orange-600">{upcomingDeadlines.length}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col sm:flex-row sm:items-center sm:gap-2">
             <span className="text-xs text-gray-500">완료</span>
             <span className="text-lg font-bold text-emerald-600">{stats.completed}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col sm:flex-row sm:items-center sm:gap-2">
             <span className="text-xs text-gray-500">진행중</span>
             <span className="text-lg font-bold text-blue-600">{stats.inProgress}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col sm:flex-row sm:items-center sm:gap-2">
             <span className="text-xs text-gray-500">기한초과</span>
             <span className="text-lg font-bold text-red-600">{stats.overdue}</span>
           </div>
-          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col col-span-3 sm:col-span-1">
-            <span className="text-xs text-gray-500 mb-1">담당자</span>
-            <div className="flex flex-wrap gap-2">
+          <div className="bg-white rounded-lg shadow px-3 py-2 flex flex-col sm:flex-row sm:items-center sm:gap-3 col-span-2 sm:col-span-1">
+            <span className="text-xs text-gray-500">담당자</span>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {Object.entries(ownerLoad).map(([owner, load]) => (
                 <span key={owner} className="text-xs">
                   {owner}
