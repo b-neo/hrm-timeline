@@ -551,7 +551,7 @@ const RecruitmentTimeline = () => {
                 👨‍💼
               </div>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold">김남빈</h1>
+                <h1 className="text-lg sm:text-xl font-bold">개발자 김남빈</h1>
                 <p className="text-blue-100 text-xs sm:text-sm">nambin96@naver.com</p>
               </div>
             </div>
